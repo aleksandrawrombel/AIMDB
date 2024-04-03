@@ -66,6 +66,28 @@ function Chatbot() {
       id: "explanation",
       component: <GetName />,
       asMessage: true,
+      trigger: "help",
+    },
+    {
+      id: "help",
+      options: [
+        { value: "yes", label: "Sure!", trigger: "yes" },
+        { value: "no", label: "No, thanks...", trigger: "no_thanks" },
+      ],
+    },
+    {
+      id: "yes",
+      message: `Thank you! Thank you! Thank you! Let's do this!`,
+      trigger: "explanation_help",
+    },
+    {
+      id: "no_thanks",
+      message: "Well, ok then... Bye!",
+      end: true,
+    },
+    {
+      id: "explanation_help",
+      message: "Let me tell you all about it!",
       end: true,
     },
   ];
