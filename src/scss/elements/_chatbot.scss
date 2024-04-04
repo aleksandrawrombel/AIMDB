@@ -8,8 +8,9 @@
   transition: opacity 2s ease;
   background-color: $gold;
   background-image: linear-gradient(to bottom right, $gold, #ac7f00);
-  line-height: 1rem;
-  letter-spacing: 0.09rem;
+  line-height: 1.2rem;
+  letter-spacing: 0.1rem;
+  text-align: justify;
 }
 
 .fade_in {
@@ -24,24 +25,28 @@
   0% {
     transform: rotate(0deg);
   }
-  50% {
-    transform: rotate(10deg);
-  }
   100% {
-    transform: rotate(0deg);
+    transform: rotate(10deg);
   }
 }
 
 .robotic_animation {
   display: inline-block;
-  animation: robotic 6s 3s infinite;
+  animation: robotic 8s 3s forwards;
 }
 
 .rsc-os-option-element {
-  line-height: 1rem;
-  letter-spacing: 0.09rem;
+  line-height: 1.2rem;
+  letter-spacing: 0.1rem;
 }
 
 .rsc-os {
-  padding-left: 3rem;
+  padding-right: 1rem;
+  text-align: right;
 }
+
+// @media (max-width: 568px) {
+//   .chatbot {
+//     margin: 12rem;
+//   }
+// }
