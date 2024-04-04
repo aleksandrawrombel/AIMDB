@@ -37,7 +37,11 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
 
   return (
     <>
-      <p>{isCorrect ? "Yes, you are right! Let's keep going, I am so thrilled!" : "No, no, no! It's not correct, let's try another one!"}</p>
+      <p>
+        {isCorrect
+          ? "Yes, you are right! Let's keep going, I am so thrilled!"
+          : "No, no, no! It's not correct, let's try another one!"}
+      </p>
     </>
   );
 }
@@ -162,13 +166,70 @@ function Chatbot() {
     {
       id: "thirdAIOrHuman",
       options: [
-        { value: "AI", label: "AI", trigger: "thirdanswerChecker" },
-        { value: "human", label: "Human", trigger: "thirdanswerChecker" },
+        { value: "AI", label: "AI", trigger: "thirdAnswerChecker" },
+        { value: "human", label: "Human", trigger: "thirdAnswerChecker" },
       ],
     },
     {
-      id: "thirdanswerChecker",
+      id: "thirdAnswerChecker",
       component: <AnswerChecker index={2} />,
+      asMessage: true,
+      trigger: "fourthMovie",
+    },
+    {
+      id: "fourthMovie",
+      message: `${randomMoviesArray[3].description}`,
+      delay: 6000,
+      trigger: "fourthAIOrHuman",
+    },
+    {
+      id: "fourthAIOrHuman",
+      options: [
+        { value: "AI", label: "AI", trigger: "fourthAnswerChecker" },
+        { value: "human", label: "Human", trigger: "fourthAnswerChecker" },
+      ],
+    },
+    {
+      id: "fourthAnswerChecker",
+      component: <AnswerChecker index={3} />,
+      asMessage: true,
+      trigger: "fifthMovie",
+    },
+    {
+      id: "fifthMovie",
+      message: `${randomMoviesArray[4].description}`,
+      delay: 6000,
+      trigger: "fifthAIOrHuman",
+    },
+    {
+      id: "fifthAIOrHuman",
+      options: [
+        { value: "AI", label: "AI", trigger: "fifthAnswerChecker" },
+        { value: "human", label: "Human", trigger: "fifthAnswerChecker" },
+      ],
+    },
+    {
+      id: "fifthAnswerChecker",
+      component: <AnswerChecker index={4} />,
+      asMessage: true,
+      trigger: "sixthMovie",
+    },
+    {
+      id: "sixthMovie",
+      message: `${randomMoviesArray[5].description}`,
+      delay: 6000,
+      trigger: "sixthAIOrHuman",
+    },
+    {
+      id: "sixthAIOrHuman",
+      options: [
+        { value: "AI", label: "AI", trigger: "sixthAnswerChecker" },
+        { value: "human", label: "Human", trigger: "sixthAnswerChecker" },
+      ],
+    },
+    {
+      id: "sixthAnswerChecker",
+      component: <AnswerChecker index={5} />,
       asMessage: true,
       end: true,
     },

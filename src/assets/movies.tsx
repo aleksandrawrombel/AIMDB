@@ -7,10 +7,12 @@ interface Movie {
 }
 
 function getRandomMovie(movies: Movie[]) {
-  const randomIndex = Math.floor(Math.random() * movies.length);
-  const randomMovie = movies[randomIndex];
+  const moviesCopy = [...movies];
 
-  return { description: randomMovie.description, author: randomMovie.author };
+  const randomIndex = Math.floor(Math.random() * moviesCopy.length);
+  const randomMovie = moviesCopy[randomIndex];
+
+  return { description: randomMovie.description, author: randomMovie.author, id: randomMovie.id };
 }
 
 const movies: Movie[] = [
@@ -178,11 +180,21 @@ const movies: Movie[] = [
 type RandomMovie = {
   description: string;
   author: string;
+  id: number;
 };
 
 const randomMoviesArray: RandomMovie[] = [];
-for (let i = 0; i < 6; i++) {
-  randomMoviesArray.push(getRandomMovie(movies));
+
+while (randomMoviesArray.length < 6) {
+  const selectedMovie = getRandomMovie(movies);
+  let isUnique = true;
+  for (const movie of randomMoviesArray) {
+    if (movie.id === selectedMovie.id) {
+      isUnique = false;
+      break;
+    }
+  }
+  if (isUnique) randomMoviesArray.push(selectedMovie);
 }
 
 export { randomMoviesArray };
