@@ -24,27 +24,50 @@ interface AnswerCheckerProps {
 }
 
 function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [isCorrectAI, setIsCorrectAI] = useState(false);
+  const [isCorrectHuman, setIsCorrectHuman] = useState(false);
+  const [isIncorrect, setIsIncorrect] = useState(false);
 
   useEffect(() => {
     const userAnswer = previousStep.value;
     const currentMovieAuthor = randomMoviesArray[index].author;
 
-    if (userAnswer === currentMovieAuthor) {
-      setIsCorrect(true);
+    if (userAnswer === "AI" && currentMovieAuthor === "AI") {
+      setIsCorrectAI(true);
+      setIsCorrectHuman(false);
+      setIsIncorrect(false);
+    } else if (userAnswer === "human" && currentMovieAuthor === "human") {
+      setIsCorrectAI(false);
+      setIsCorrectHuman(true);
+      setIsIncorrect(false);
+    } else {
+      setIsCorrectAI(false);
+      setIsCorrectHuman(false);
+      setIsIncorrect(true);
     }
   }, [index, previousStep.value]);
 
   return (
     <>
-      <p>
-        {isCorrect
-          ? "Yes, you are right! Let's keep going, I am so thrilled!"
-          : "No, no, no! It's not correct, let's try another one!"}
-      </p>
+      {isCorrectAI && (
+        <p>
+          Yes, you are right, I remember writing it actually... Let's keep
+          going!
+        </p>
+      )}
+      {isCorrectHuman && (
+        <p>
+          That's right, this one came out of the human brain! Let's see another
+          one!
+        </p>
+      )}
+      {isIncorrect && (
+        <p>No, sorry, it's the other way around! Come on, check another one!</p>
+      )}
     </>
   );
 }
+
 function Chatbot() {
   const [isVisible, setIsVisible] = useState(false);
 
