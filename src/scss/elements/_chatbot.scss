@@ -57,9 +57,14 @@
   }
 }
 
-.movie_poster_another_description {
-  text-align: center;
+.movie_link {
+  transition: transform 0.5s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
 }
+
 @media (max-width: 750px) {
   .chatbot {
     margin: 12rem;

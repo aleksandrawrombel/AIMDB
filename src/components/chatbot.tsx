@@ -48,7 +48,7 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
   }, [index, previousStep.value]);
 
   const currentMoviePoster = randomMoviesArray[index].poster;
-  console.log(currentMoviePoster);
+  const currenMovieUrl = randomMoviesArray[index].url;
 
   return (
     <>
@@ -60,18 +60,16 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
       )}
       {isCorrectHuman && (
         <>
-          <p>
-            That's right, this one came out of the human brain! Check out the
-            poster!
-          </p>
+          <p>That's right, this one came out of the human brain!</p>
           <div className="movie_poster">
-            <img src={currentMoviePoster} alt="movie_poster" />
+            <a href={currenMovieUrl} target="_blank" className="movie_link">
+              <img src={currentMoviePoster} alt="movie_poster" />
+            </a>
           </div>
-          <p className="movie_poster_another_description">Let's see another description!</p>
         </>
       )}
       {isIncorrect && (
-        <p>No, sorry, it's the other way around! Come on, check another one!</p>
+        <p>No, sorry, it's the other way around! Come on, check what's next!</p>
       )}
     </>
   );
@@ -154,7 +152,7 @@ function Chatbot() {
     {
       id: "firstMovie",
       message: `${randomMoviesArray[0].description}`,
-      delay: 6000,
+      delay: 8000,
       trigger: "firstAIOrHuman",
     },
     {
@@ -168,12 +166,21 @@ function Chatbot() {
       id: "firstAnswerChecker",
       component: <AnswerChecker index={0} />,
       asMessage: true,
-      trigger: "secondMovie",
+      trigger: "secondOption",
+    },
+    {
+      id: "secondOption",
+      options: [
+        {
+          value: "secondOptionYes",
+          label: "Show another one!",
+          trigger: "secondMovie",
+        },
+      ],
     },
     {
       id: "secondMovie",
       message: `${randomMoviesArray[1].description}`,
-      delay: 6000,
       trigger: "secondAIOrHuman",
     },
     {
@@ -187,12 +194,21 @@ function Chatbot() {
       id: "secondAnswerChecker",
       component: <AnswerChecker index={1} />,
       asMessage: true,
-      trigger: "thirdMovie",
+      trigger: "thirdOption",
+    },
+    {
+      id: "thirdOption",
+      options: [
+        {
+          value: "thirdOptionYes",
+          label: "Next, please!",
+          trigger: "thirdMovie",
+        },
+      ],
     },
     {
       id: "thirdMovie",
       message: `${randomMoviesArray[2].description}`,
-      delay: 6000,
       trigger: "thirdAIOrHuman",
     },
     {
@@ -206,12 +222,21 @@ function Chatbot() {
       id: "thirdAnswerChecker",
       component: <AnswerChecker index={2} />,
       asMessage: true,
-      trigger: "fourthMovie",
+      trigger: "fourthOption",
+    },
+    {
+      id: "fourthOption",
+      options: [
+        {
+          value: "fourthOptionYes",
+          label: "Let's see...",
+          trigger: "fourthMovie",
+        },
+      ],
     },
     {
       id: "fourthMovie",
       message: `${randomMoviesArray[3].description}`,
-      delay: 6000,
       trigger: "fourthAIOrHuman",
     },
     {
@@ -225,12 +250,21 @@ function Chatbot() {
       id: "fourthAnswerChecker",
       component: <AnswerChecker index={3} />,
       asMessage: true,
-      trigger: "fifthMovie",
+      trigger: "fifthOption",
+    },
+    {
+      id: "fifthOption",
+      options: [
+        {
+          value: "fifthOptionYes",
+          label: "Show another one!",
+          trigger: "fifthMovie",
+        },
+      ],
     },
     {
       id: "fifthMovie",
       message: `${randomMoviesArray[4].description}`,
-      delay: 6000,
       trigger: "fifthAIOrHuman",
     },
     {
@@ -244,12 +278,17 @@ function Chatbot() {
       id: "fifthAnswerChecker",
       component: <AnswerChecker index={4} />,
       asMessage: true,
-      trigger: "sixthMovie",
+      trigger: "sixthOption",
+    },
+    {
+      id: "sixthOption",
+      options: [
+        { value: "sixthOptionYes", label: "Next!", trigger: "sixthMovie" },
+      ],
     },
     {
       id: "sixthMovie",
       message: `${randomMoviesArray[5].description}`,
-      delay: 6000,
       trigger: "sixthAIOrHuman",
     },
     {
@@ -290,8 +329,8 @@ function Chatbot() {
         <ChatBot
           className="chatbot"
           steps={steps}
-          width={"60vw"}
-          height={"60vh"}
+          width={"70vw"}
+          height={"70vh"}
           headerTitle={
             <>
               <span className="AI_color robotic_animation">AI</span>
