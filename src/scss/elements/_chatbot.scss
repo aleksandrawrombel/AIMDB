@@ -45,8 +45,31 @@
   text-align: right;
 }
 
-// @media (max-width: 568px) {
-//   .chatbot {
-//     margin: 12rem;
-//   }
-// }
+.movie_poster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 16rem;
+    height: 22rem;
+    padding: 1rem;
+  }
+}
+
+.movie_poster_another_description {
+  text-align: center;
+}
+@media (max-width: 750px) {
+  .chatbot {
+    margin: 12rem;
+  }
+
+  .movie_poster {
+    img {
+      width: 8rem;
+      height: 11rem;
+      padding: 1rem;
+    }
+  }
+}

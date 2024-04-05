@@ -47,6 +47,9 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
     }
   }, [index, previousStep.value]);
 
+  const currentMoviePoster = randomMoviesArray[index].poster;
+  console.log(currentMoviePoster);
+
   return (
     <>
       {isCorrectAI && (
@@ -56,10 +59,16 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
         </p>
       )}
       {isCorrectHuman && (
-        <p>
-          That's right, this one came out of the human brain! Let's see another
-          one!
-        </p>
+        <>
+          <p>
+            That's right, this one came out of the human brain! Check out the
+            poster!
+          </p>
+          <div className="movie_poster">
+            <img src={currentMoviePoster} alt="movie_poster" />
+          </div>
+          <p className="movie_poster_another_description">Let's see another description!</p>
+        </>
       )}
       {isIncorrect && (
         <p>No, sorry, it's the other way around! Come on, check another one!</p>
