@@ -14,7 +14,7 @@ function GetName({ steps }: { steps: { name: { value: string } } }) {
   }, [steps.name.value]);
 
   return (
-    <p>{`I am the AI Movie Database main manager, the one and only manager in fact. I have a little problem... Would you like to help me, ${name}?`}</p>
+    <p>{`I am the AI Movie Database manager, the only manager and most important manager in fact. I have a little problem... Would you like to help me, ${name}?`}</p>
   );
 }
 
@@ -27,6 +27,15 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
   const [isCorrectAI, setIsCorrectAI] = useState(false);
   const [isCorrectHuman, setIsCorrectHuman] = useState(false);
   const [isIncorrect, setIsIncorrect] = useState(false);
+
+  const answers = [
+    `That's right, this one came out of the human brain!`,
+    `You are correct, this one was written by a human!`,
+    `You are right! This one, well... That's on humans!`,
+    `Yes, exactly! Crafted by the human mind! Incredible!`,
+    `Yes, you are right! This is pure human imagination!`,
+    `Yes, well done! A manifestation of human thought!`,
+  ];
 
   useEffect(() => {
     const userAnswer = previousStep.value;
@@ -60,7 +69,7 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
       )}
       {isCorrectHuman && (
         <>
-          <p>That's right, this one came out of the human brain!</p>
+          <p>{answers[index]}</p>
           <div className="movie_poster">
             <a href={currenMovieUrl} target="_blank" className="movie_link">
               <img src={currentMoviePoster} alt="movie_poster" />
@@ -85,7 +94,7 @@ function Chatbot() {
   const steps = [
     {
       id: "welcome",
-      message: "Welcome to AIMDb! My name is cyberLingua_language_model_v1.pth",
+      message: "Welcome to AIMDb! My name is 01000010 01101111 01100010!",
       trigger: "bob",
     },
     {
@@ -117,7 +126,7 @@ function Chatbot() {
     },
     {
       id: "username",
-      message: "Hello {previousValue}, nice to meet you!",
+      message: "Hello {previousValue}, pleasure to meet you!",
       trigger: "explanation",
     },
     {
@@ -135,7 +144,7 @@ function Chatbot() {
     },
     {
       id: "yes",
-      message: `Thank you! Thank you! Thank you! Let's do this!`,
+      message: `Thank you, my saviour! Let's do this!`,
       trigger: "explanation_help",
     },
     {
@@ -146,7 +155,13 @@ function Chatbot() {
     {
       id: "explanation_help",
       message:
-        "I have some movie descriptions that I am having trouble with. Are those movies written by humans or are they written by AI? Could you help me check? Here comes the first description! Is it a human movie or an AI movie?!",
+        "I have some movie descriptions that I am having trouble with. Are those movies written by humans or are they written by AI? Please, help me categorize them!",
+      trigger: "explanation_help2",
+    },
+    {
+      id: "explanation_help2",
+      message:
+        "Here comes the first description! Is it a human movie or an AI movie?!",
       trigger: "firstMovie",
     },
     {
@@ -229,7 +244,7 @@ function Chatbot() {
       options: [
         {
           value: "fourthOptionYes",
-          label: "Let's see...",
+          label: "Let's see the next one!",
           trigger: "fourthMovie",
         },
       ],
@@ -339,7 +354,7 @@ function Chatbot() {
           }
           botAvatar={humanoid_icon}
           userAvatar={user_icon}
-          botDelay={2500}
+          botDelay={3000}
           userDelay={10}
           bubbleOptionStyle={bubbleOptionStyle}
         />
