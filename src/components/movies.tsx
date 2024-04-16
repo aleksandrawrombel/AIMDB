@@ -19,7 +19,39 @@ import SantasDog from "../assets/movie_posters/SantasDog.png";
 import TheHolidayCalendar from "../assets/movie_posters/TheHolidayCalendar.png";
 import SantaClausConquersTheMartians from "../assets/movie_posters/SantaClausConquersTheMartians.png";
 
+const API_KEY = import.meta.env.VITE_OPENAI_API_KEY as string;
 
+function generateApiMovies() {
+  async function getDescriptions() {
+    console.log("API req sent");
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: "Hello!!!" }],
+        max_tokens: 50,
+      }),
+    };
+    try {
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        options
+      );
+      const data = await response.json();
+      const description = data.choices[0].message.content;
+      if (data.choices[0].message.content) {
+        console.log(description);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  getDescriptions();
+}
 
 interface Movie {
   id: number;
@@ -260,16 +292,21 @@ type RandomMovie = {
 
 const randomMoviesArray: RandomMovie[] = [];
 
-while (randomMoviesArray.length < 6) {
-  const selectedMovie = getRandomMovie(movies);
-  let isUnique = true;
-  for (const movie of randomMoviesArray) {
-    if (movie.id === selectedMovie.id) {
-      isUnique = false;
-      break;
+function createRandomMoviesArray() {
+  while (randomMoviesArray.length < 6) {
+    const selectedMovie = getRandomMovie(movies);
+    let isUnique = true;
+    for (const movie of randomMoviesArray) {
+      if (movie.id === selectedMovie.id) {
+        isUnique = false;
+        break;
+      }
     }
+    if (isUnique) randomMoviesArray.push(selectedMovie);
+    console.log(randomMoviesArray);
   }
-  if (isUnique) randomMoviesArray.push(selectedMovie);
+  return randomMoviesArray;
 }
+// createRandomMoviesArray();
 
-export { randomMoviesArray };
+export { generateApiMovies, createRandomMoviesArray, randomMoviesArray };

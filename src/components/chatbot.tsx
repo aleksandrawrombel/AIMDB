@@ -2,7 +2,10 @@ import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
 import humanoid_icon from "../assets/humanoid_icon.svg";
 import user_icon from "../assets/user_icon.svg";
-import { randomMoviesArray } from "./movies";
+import {
+  randomMoviesArray,
+  generateApiMovies,
+} from "./movies";
 
 import { useState, useEffect } from "react";
 
@@ -70,11 +73,7 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
 
   return (
     <>
-      {isCorrectAI && (
-        <p>
-          {AICorrectAnswers[index]}
-        </p>
-      )}
+      {isCorrectAI && <p>{AICorrectAnswers[index]}</p>}
       {isCorrectHuman && (
         <>
           <p>{humanCorrectAnswers[index]}</p>
@@ -97,6 +96,7 @@ function Chatbot() {
 
   useEffect(() => {
     setIsVisible(true);
+    generateApiMovies();
   }, []);
 
   const steps = [
