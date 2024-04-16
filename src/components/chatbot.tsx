@@ -2,10 +2,7 @@ import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
 import humanoid_icon from "../assets/humanoid_icon.svg";
 import user_icon from "../assets/user_icon.svg";
-import {
-  randomMoviesArray,
-  generateApiMovies,
-} from "./movies";
+import { randomMoviesArray, generateApiMovies } from "./movies";
 
 import { useState, useEffect } from "react";
 
@@ -24,9 +21,14 @@ function GetName({ steps }: { steps: { name: { value: string } } }) {
 interface AnswerCheckerProps {
   index: number;
   previousStep: { value: string };
+  joinedMoviesArray: Array<any>;
 }
 
-function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
+function AnswerChecker({
+  index,
+  previousStep,
+  joinedMoviesArray,
+}: AnswerCheckerProps) {
   const [isCorrectAI, setIsCorrectAI] = useState(false);
   const [isCorrectHuman, setIsCorrectHuman] = useState(false);
   const [isIncorrect, setIsIncorrect] = useState(false);
@@ -51,7 +53,7 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
 
   useEffect(() => {
     const userAnswer = previousStep.value;
-    const currentMovieAuthor = randomMoviesArray[index].author;
+    const currentMovieAuthor = joinedMoviesArray[index].author;
 
     if (userAnswer === "AI" && currentMovieAuthor === "AI") {
       setIsCorrectAI(true);
@@ -66,10 +68,10 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
       setIsCorrectHuman(false);
       setIsIncorrect(true);
     }
-  }, [index, previousStep.value]);
+  }, [index, previousStep.value, joinedMoviesArray]);
 
-  const currentMoviePoster = randomMoviesArray[index].poster;
-  const currenMovieUrl = randomMoviesArray[index].url;
+  const currentMoviePoster = joinedMoviesArray[index].poster;
+  const currenMovieUrl = joinedMoviesArray[index].url;
 
   return (
     <>
@@ -94,10 +96,45 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
 function Chatbot() {
   const [isVisible, setIsVisible] = useState(false);
 
+  interface AIMovie {
+    author: string;
+    description: string | null;
+  }
+  const [AIMovies, setAIMovies] = useState<AIMovie[]>([]);
+
   useEffect(() => {
     setIsVisible(true);
-    generateApiMovies();
+
+    async function fetchAIMovies() {
+      const response = await generateApiMovies();
+      setAIMovies(response);
+    }
+    // fetchAIMovies();
   }, []);
+
+  if (AIMovies.length === 0) {
+    return (
+      <div className="loading">
+        <span className="loader"></span>
+      </div>
+    );
+  }
+
+  const humanMoviesArrayCopy = [...randomMoviesArray];
+  const AIMoviesArray = AIMovies;
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  const joinedMoviesArray = shuffleArray([
+    ...humanMoviesArrayCopy,
+    ...AIMoviesArray,
+  ]);
 
   const steps = [
     {
@@ -174,7 +211,7 @@ function Chatbot() {
     },
     {
       id: "firstMovie",
-      message: `${randomMoviesArray[0].description}`,
+      message: `${joinedMoviesArray[0].description}`,
       delay: 8000,
       trigger: "firstAIOrHuman",
     },
@@ -187,7 +224,9 @@ function Chatbot() {
     },
     {
       id: "firstAnswerChecker",
-      component: <AnswerChecker index={0} />,
+      component: (
+        <AnswerChecker index={0} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       trigger: "secondOption",
     },
@@ -203,7 +242,7 @@ function Chatbot() {
     },
     {
       id: "secondMovie",
-      message: `${randomMoviesArray[1].description}`,
+      message: `${joinedMoviesArray[1].description}`,
       trigger: "secondAIOrHuman",
     },
     {
@@ -215,7 +254,9 @@ function Chatbot() {
     },
     {
       id: "secondAnswerChecker",
-      component: <AnswerChecker index={1} />,
+      component: (
+        <AnswerChecker index={1} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       trigger: "thirdOption",
     },
@@ -231,7 +272,7 @@ function Chatbot() {
     },
     {
       id: "thirdMovie",
-      message: `${randomMoviesArray[2].description}`,
+      message: `${joinedMoviesArray[2].description}`,
       trigger: "thirdAIOrHuman",
     },
     {
@@ -243,7 +284,9 @@ function Chatbot() {
     },
     {
       id: "thirdAnswerChecker",
-      component: <AnswerChecker index={2} />,
+      component: (
+        <AnswerChecker index={2} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       trigger: "fourthOption",
     },
@@ -259,7 +302,7 @@ function Chatbot() {
     },
     {
       id: "fourthMovie",
-      message: `${randomMoviesArray[3].description}`,
+      message: `${joinedMoviesArray[3].description}`,
       trigger: "fourthAIOrHuman",
     },
     {
@@ -271,7 +314,9 @@ function Chatbot() {
     },
     {
       id: "fourthAnswerChecker",
-      component: <AnswerChecker index={3} />,
+      component: (
+        <AnswerChecker index={3} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       trigger: "fifthOption",
     },
@@ -287,7 +332,7 @@ function Chatbot() {
     },
     {
       id: "fifthMovie",
-      message: `${randomMoviesArray[4].description}`,
+      message: `${joinedMoviesArray[4].description}`,
       trigger: "fifthAIOrHuman",
     },
     {
@@ -299,7 +344,9 @@ function Chatbot() {
     },
     {
       id: "fifthAnswerChecker",
-      component: <AnswerChecker index={4} />,
+      component: (
+        <AnswerChecker index={4} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       trigger: "sixthOption",
     },
@@ -311,7 +358,7 @@ function Chatbot() {
     },
     {
       id: "sixthMovie",
-      message: `${randomMoviesArray[5].description}`,
+      message: `${joinedMoviesArray[5].description}`,
       trigger: "sixthAIOrHuman",
     },
     {
@@ -323,7 +370,9 @@ function Chatbot() {
     },
     {
       id: "sixthAnswerChecker",
-      component: <AnswerChecker index={5} />,
+      component: (
+        <AnswerChecker index={5} joinedMoviesArray={joinedMoviesArray} />
+      ),
       asMessage: true,
       end: true,
     },

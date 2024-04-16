@@ -32,8 +32,13 @@ function generateApiMovies() {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: "Hello!!!" }],
-        max_tokens: 50,
+        messages: [
+          {
+            role: "user",
+            content: `generate description with a fictional, ridiculous movie plot that may contain human protagonists (not necessarily) and that will be 200 tokens long, no additional text, title, just pure description text`,
+          },
+        ],
+        max_tokens: 500,
       }),
     };
     try {
@@ -44,13 +49,29 @@ function generateApiMovies() {
       const data = await response.json();
       const description = data.choices[0].message.content;
       if (data.choices[0].message.content) {
-        console.log(description);
+
+        return description;
       }
     } catch (error) {
       console.error(error);
     }
   }
-  getDescriptions();
+
+  const AIMovie = {
+    author: "AI",
+  };
+
+  async function saveResponses() {
+    const responses = [];
+
+    for (let i = 0; i < 3; i++) {
+      const description = await getDescriptions();
+      const responseObject = { ...AIMovie, description };
+      responses.push(responseObject);
+    }
+    return responses;
+  }
+  // return saveResponses();
 }
 
 interface Movie {
@@ -65,7 +86,6 @@ interface Movie {
 
 function getRandomMovie(movies: Movie[]) {
   const moviesCopy = [...movies];
-
   const randomIndex = Math.floor(Math.random() * moviesCopy.length);
   const randomMovie = moviesCopy[randomIndex];
 
@@ -293,7 +313,7 @@ type RandomMovie = {
 const randomMoviesArray: RandomMovie[] = [];
 
 function createRandomMoviesArray() {
-  while (randomMoviesArray.length < 6) {
+  while (randomMoviesArray.length < 3) {
     const selectedMovie = getRandomMovie(movies);
     let isUnique = true;
     for (const movie of randomMoviesArray) {
@@ -303,10 +323,9 @@ function createRandomMoviesArray() {
       }
     }
     if (isUnique) randomMoviesArray.push(selectedMovie);
-    console.log(randomMoviesArray);
   }
   return randomMoviesArray;
 }
-// createRandomMoviesArray();
+createRandomMoviesArray();
 
 export { generateApiMovies, createRandomMoviesArray, randomMoviesArray };
