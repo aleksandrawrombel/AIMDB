@@ -1,23 +1,25 @@
-import SoulMan from "./movie_posters/SoulMan.png";
-import FaceOff from "./movie_posters/FaceOff.png";
-import BabyGeniuses from "./movie_posters/BabyGeniuses.png";
-import AirBud from "./movie_posters/AirBud.png";
-import SnakesOnAPlane from "./movie_posters/SnakesOnAPlane.png";
-import HowardTheDuck from "./movie_posters/HowardTheDuck.png";
-import Ed from "./movie_posters/Ed.png";
-import AttackOfTheKillerTomatoes from "./movie_posters/AttackOfTheKillerTomatoes.png";
-import Ekusute from "./movie_posters/Ekusute.png";
-import KillerKlownsFromOuterSpace from "./movie_posters/KillerKlownsFromOuterSpace.png";
-import JoesApartment from "./movie_posters/JoesApartment.png";
-import JoeVersusTheVolcano from "./movie_posters/JoeVersusTheVolcano.png";
-import TheOddLifeOfTimothyGreen from "./movie_posters/TheOddLifeOfTimothyGreen.png";
-import Mannequin from "./movie_posters/Mannequin.png";
-import HellComesToFrogtown from "./movie_posters/HellComesToFrogtown.png";
-import TheHappening from "./movie_posters/TheHappening.png";
-import TheThingWithTwoHeads from "./movie_posters/TheThingWithTwoHeads.png";
-import SantasDog from "./movie_posters/SantasDog.png";
-import TheHolidayCalendar from "./movie_posters/TheHolidayCalendar.png";
-import SantaClausConquersTheMartians from "./movie_posters/SantaClausConquersTheMartians.png";
+import SoulMan from "../assets/movie_posters/SoulMan.png";
+import FaceOff from "../assets/movie_posters/FaceOff.png";
+import BabyGeniuses from "../assets/movie_posters/BabyGeniuses.png";
+import AirBud from "../assets/movie_posters/AirBud.png";
+import SnakesOnAPlane from "../assets/movie_posters/SnakesOnAPlane.png";
+import HowardTheDuck from "../assets/movie_posters/HowardTheDuck.png";
+import Ed from "../assets/movie_posters/Ed.png";
+import AttackOfTheKillerTomatoes from "../assets/movie_posters/AttackOfTheKillerTomatoes.png";
+import Ekusute from "../assets/movie_posters/Ekusute.png";
+import KillerKlownsFromOuterSpace from "../assets/movie_posters/KillerKlownsFromOuterSpace.png";
+import JoesApartment from "../assets/movie_posters/JoesApartment.png";
+import JoeVersusTheVolcano from "../assets/movie_posters/JoeVersusTheVolcano.png";
+import TheOddLifeOfTimothyGreen from "../assets/movie_posters/TheOddLifeOfTimothyGreen.png";
+import Mannequin from "../assets/movie_posters/Mannequin.png";
+import HellComesToFrogtown from "../assets/movie_posters/HellComesToFrogtown.png";
+import TheHappening from "../assets/movie_posters/TheHappening.png";
+import TheThingWithTwoHeads from "../assets/movie_posters/TheThingWithTwoHeads.png";
+import SantasDog from "../assets/movie_posters/SantasDog.png";
+import TheHolidayCalendar from "../assets/movie_posters/TheHolidayCalendar.png";
+import SantaClausConquersTheMartians from "../assets/movie_posters/SantaClausConquersTheMartians.png";
+
+
 
 interface Movie {
   id: number;

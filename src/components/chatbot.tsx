@@ -2,7 +2,7 @@ import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
 import humanoid_icon from "../assets/humanoid_icon.svg";
 import user_icon from "../assets/user_icon.svg";
-import { randomMoviesArray } from "../assets/movies";
+import { randomMoviesArray } from "./movies";
 
 import { useState, useEffect } from "react";
 
@@ -28,13 +28,22 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
   const [isCorrectHuman, setIsCorrectHuman] = useState(false);
   const [isIncorrect, setIsIncorrect] = useState(false);
 
-  const answers = [
+  const humanCorrectAnswers = [
     `That's right, this one came out of the human brain!`,
     `You are correct, this one was written by a human!`,
     `You are right! This one, well... That's on humans!`,
     `Yes, exactly! Crafted by the human mind! Incredible!`,
     `Yes, you are right! This is pure human imagination!`,
     `Yes, well done! A manifestation of human thought!`,
+  ];
+
+  const AICorrectAnswers = [
+    `That's right, this one is written by AI! Incredible!`,
+    `You are correct, artificial intelligence at it's best!`,
+    `You are right! This one, well... That's on me, my friend!`,
+    `Yes, exactly! Crafted by the AI power! Incredible!`,
+    `Yes, you are right! This is pure AI imagination!`,
+    `Yes, well done! A manifestation of mechanical thought!`,
   ];
 
   useEffect(() => {
@@ -63,13 +72,12 @@ function AnswerChecker({ index, previousStep }: AnswerCheckerProps) {
     <>
       {isCorrectAI && (
         <p>
-          Yes, you are right, I remember writing it actually... Let's keep
-          going!
+          {AICorrectAnswers[index]}
         </p>
       )}
       {isCorrectHuman && (
         <>
-          <p>{answers[index]}</p>
+          <p>{humanCorrectAnswers[index]}</p>
           <div className="movie_poster">
             <a href={currenMovieUrl} target="_blank" className="movie_link">
               <img src={currentMoviePoster} alt="movie_poster" />
