@@ -109,13 +109,18 @@ function Chatbot() {
     description: string | null;
   }
   const [AIMovies, setAIMovies] = useState<AIMovie[]>([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setIsVisible(true);
 
     async function fetchAIMovies() {
-      const response = await generateApiMovies();
-      setAIMovies(response);
+      try {
+        const response = await generateApiMovies();
+        setAIMovies(response);
+      } catch (error) {
+        setError("Something went wrong! Refresh the page!");
+      }
     }
     // fetchAIMovies();
   }, []);
@@ -123,7 +128,10 @@ function Chatbot() {
   if (AIMovies.length === 0) {
     return (
       <div className="loading">
-        <span className="loader"></span>
+        <div className="loader_container">
+          <span className="loader"></span>
+          {error && <p className="loading_error">{error}</p>}
+        </div>
       </div>
     );
   }
