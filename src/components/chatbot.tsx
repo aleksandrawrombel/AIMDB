@@ -1,5 +1,6 @@
 import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
+
 import humanoid_icon from "../assets/humanoid_icon.svg";
 import user_icon from "../assets/user_icon.svg";
 import { randomMoviesArray, generateApiMovies } from "./movies";
@@ -14,7 +15,7 @@ function GetName({ steps }: { steps: { name: { value: string } } }) {
   }, [steps.name.value]);
 
   return (
-    <p>{`I am the AI Movie Database manager, the only manager and most important manager in fact. I have a little problem... Would you like to help me, ${name}?`}</p>
+    <p>{`I am the AI Movie Database manager, the one and only manager in fact! I have a little problem... Would you like to help me, ${name}?`}</p>
   );
 }
 
@@ -49,6 +50,15 @@ function AnswerChecker({
     `Yes, exactly! Crafted by the AI power! Incredible!`,
     `Yes, you are right! This is pure AI imagination!`,
     `Yes, well done! A manifestation of mechanical thought!`,
+  ];
+
+  const wrongAnswers = [
+    `No, sorry, it's the other way around! Come on, check what's next!`,
+    `Close, but no. Wrong answer!`,
+    `Sorry, wrong answer! Keep going!`,
+    `Incorrect, sorry! Good luck with the next one!`,
+    `Wrong! Let's check the next one!`,
+    `Well, you are incorrect... But good job nonetheless!`,
   ];
 
   useEffect(() => {
@@ -86,9 +96,7 @@ function AnswerChecker({
           </div>
         </>
       )}
-      {isIncorrect && (
-        <p>No, sorry, it's the other way around! Come on, check what's next!</p>
-      )}
+      {isIncorrect && <p>{wrongAnswers[index]}</p>}
     </>
   );
 }
@@ -139,12 +147,7 @@ function Chatbot() {
   const steps = [
     {
       id: "welcome",
-      message: "Welcome to AIMDb! My name is 01000010 01101111 01100010!",
-      trigger: "bob",
-    },
-    {
-      id: "bob",
-      message: "Umm, sorry! My name is Bob! What is your name?",
+      message: "Welcome to AIMDb! What is your name?",
       trigger: "name",
     },
     {
@@ -194,25 +197,33 @@ function Chatbot() {
     },
     {
       id: "yes2",
-      message: `Great, let's go!`,
+      message: `Awesome, let's go!`,
       trigger: "explanation_help",
     },
     {
       id: "explanation_help",
       message:
-        "I have some movie descriptions that I am having trouble with. Are those movies written by humans or are they written by AI? Please, help me categorize them!",
-      trigger: "explanation_help2",
+        "I have to categorize some movie descriptions, are those movies written by a human or by the AI? Are you ready to see the first description?",
+      trigger: "ready",
     },
     {
-      id: "explanation_help2",
-      message:
-        "Here comes the first description! Is it a human movie or an AI movie?!",
+      id: "ready",
+      options: [
+        {
+          value: "user_ready",
+          label: "I'm ready!",
+          trigger: "here_we_go",
+        },
+      ],
+    },
+    {
+      id: "here_we_go",
+      message: "Here we go! Is it a human movie or an AI movie?!",
       trigger: "firstMovie",
     },
     {
       id: "firstMovie",
       message: `${joinedMoviesArray[0].description}`,
-      delay: 8000,
       trigger: "firstAIOrHuman",
     },
     {
