@@ -22,7 +22,7 @@ function GetName({ steps }: { steps: { name: { value: string } } }) {
 interface AnswerCheckerProps {
   index: number;
   previousStep: { value: string };
-  joinedMoviesArray: Array<any>;
+  joinedMoviesArray: any[];
 }
 
 function AnswerChecker({
@@ -201,15 +201,15 @@ function Chatbot() {
     {
       id: "yes",
       message: `Thank you, my saviour! Let's do this!`,
-      trigger: "explanation_help",
+      trigger: "explanationHelp",
     },
     {
       id: "yes2",
       message: `Awesome, let's go!`,
-      trigger: "explanation_help",
+      trigger: "explanationHelp",
     },
     {
-      id: "explanation_help",
+      id: "explanationHelp",
       message:
         "I have to categorize some movie descriptions, are those movies written by a human or by the AI? Are you ready to see the first description?",
       trigger: "ready",
@@ -218,14 +218,14 @@ function Chatbot() {
       id: "ready",
       options: [
         {
-          value: "user_ready",
+          value: "userReady",
           label: "I'm ready!",
-          trigger: "here_we_go",
+          trigger: "hereWeGo",
         },
       ],
     },
     {
-      id: "here_we_go",
+      id: "hereWeGo",
       message: "Here we go! Is it a human movie or an AI movie?!",
       trigger: "firstMovie",
     },
@@ -393,6 +393,55 @@ function Chatbot() {
         <AnswerChecker index={5} joinedMoviesArray={joinedMoviesArray} />
       ),
       asMessage: true,
+      trigger: "done",
+    },
+    {
+      id: "done",
+      message: `And we are done! Now I got it all well categorized! Thank you!`,
+      trigger: "secondEnd",
+    },
+    {
+      id: "secondEnd",
+      message: `Feel free to restart our conversation!`,
+      trigger: "thirdEnd",
+    },
+    {
+      id: "thirdEnd",
+      options: [
+        {
+          value: "restart",
+          label: "I'd like to talk again!",
+          trigger: "reloadAction",
+        },
+        {
+          value: "finish",
+          label: "No, I'm not interested...",
+          trigger: "finalEndNoRestart",
+        },
+      ],
+    },
+    {
+      id: "reloadAction",
+      message: "All set, see ya!",
+      trigger: () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        return "bye";
+      },
+    },
+    {
+      id: "bye",
+      delay: 10000,
+      component: <div className="closing"></div>,
+      hideInput: true,
+      avatar: false,
+      end: true,
+    },
+    {
+      id: "finalEndNoRestart",
+      message: `Well... your choice! Byeee!`,
+      hideInput: true,
       end: true,
     },
   ];
