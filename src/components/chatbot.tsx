@@ -174,9 +174,11 @@ function Chatbot() {
       id: "welcome",
       message: "Welcome to AIMDb! What is your name?",
       trigger: "name",
+      placeholder: "Type the message..."
     },
     {
       id: "name",
+      placeholder: "Type your name...",
       user: true,
       trigger: "username",
       validator: (value: string) => {
@@ -201,12 +203,14 @@ function Chatbot() {
       id: "username",
       message: "Hello {previousValue}, pleasure to meet you!",
       trigger: "explanation",
+      placeholder: "Choose your answer...",
     },
     {
       id: "explanation",
       component: <GetName />,
       asMessage: true,
       trigger: "help",
+      placeholder: "Choose your answer...",
     },
     {
       id: "help",
@@ -214,22 +218,26 @@ function Chatbot() {
         { value: "yes", label: "Of course!", trigger: "yes" },
         { value: "yes2", label: "Yes, I guess...", trigger: "yes2" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "yes",
       message: `Thank you, my saviour! Let's do this!`,
       trigger: "explanationHelp",
+      placeholder: "Choose your answer...",
     },
     {
       id: "yes2",
       message: `Awesome, let's go!`,
       trigger: "explanationHelp",
+      placeholder: "Choose your answer...",
     },
     {
       id: "explanationHelp",
       message:
         "I have to categorize some movie descriptions, are those movies written by a human or by the AI? Are you ready to see the first description?",
       trigger: "ready",
+      placeholder: "Choose your answer...",
     },
     {
       id: "ready",
@@ -240,16 +248,19 @@ function Chatbot() {
           trigger: "hereWeGo",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "hereWeGo",
       message: "Here we go! Is it a human movie or an AI movie?!",
       trigger: "firstMovie",
+      placeholder: "Choose your answer...",
     },
     {
       id: "firstMovie",
       message: `${joinedMoviesArray[0].description}`,
       trigger: "firstAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "firstAIOrHuman",
@@ -257,6 +268,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "firstAnswerChecker" },
         { value: "human", label: "Human", trigger: "firstAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "firstAnswerChecker",
@@ -269,6 +281,7 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "secondOption",
+      placeholder: "Choose your answer...",
     },
     {
       id: "secondOption",
@@ -279,11 +292,13 @@ function Chatbot() {
           trigger: "secondMovie",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "secondMovie",
       message: `${joinedMoviesArray[1].description}`,
       trigger: "secondAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "secondAIOrHuman",
@@ -291,6 +306,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "secondAnswerChecker" },
         { value: "human", label: "Human", trigger: "secondAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "secondAnswerChecker",
@@ -303,6 +319,7 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "thirdOption",
+      placeholder: "Choose your answer...",
     },
     {
       id: "thirdOption",
@@ -313,11 +330,13 @@ function Chatbot() {
           trigger: "thirdMovie",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "thirdMovie",
       message: `${joinedMoviesArray[2].description}`,
       trigger: "thirdAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "thirdAIOrHuman",
@@ -325,6 +344,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "thirdAnswerChecker" },
         { value: "human", label: "Human", trigger: "thirdAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "thirdAnswerChecker",
@@ -337,6 +357,7 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "fourthOption",
+      placeholder: "Choose your answer...",
     },
     {
       id: "fourthOption",
@@ -347,11 +368,13 @@ function Chatbot() {
           trigger: "fourthMovie",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "fourthMovie",
       message: `${joinedMoviesArray[3].description}`,
       trigger: "fourthAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "fourthAIOrHuman",
@@ -359,6 +382,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "fourthAnswerChecker" },
         { value: "human", label: "Human", trigger: "fourthAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "fourthAnswerChecker",
@@ -371,6 +395,7 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "fifthOption",
+      placeholder: "Choose your answer...",
     },
     {
       id: "fifthOption",
@@ -381,11 +406,13 @@ function Chatbot() {
           trigger: "fifthMovie",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "fifthMovie",
       message: `${joinedMoviesArray[4].description}`,
       trigger: "fifthAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "fifthAIOrHuman",
@@ -393,6 +420,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "fifthAnswerChecker" },
         { value: "human", label: "Human", trigger: "fifthAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "fifthAnswerChecker",
@@ -405,17 +433,20 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "sixthOption",
+      placeholder: "Choose your answer...",
     },
     {
       id: "sixthOption",
       options: [
         { value: "sixthOptionYes", label: "Next!", trigger: "sixthMovie" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "sixthMovie",
       message: `${joinedMoviesArray[5].description}`,
       trigger: "sixthAIOrHuman",
+      placeholder: "Choose your answer...",
     },
     {
       id: "sixthAIOrHuman",
@@ -423,6 +454,7 @@ function Chatbot() {
         { value: "AI", label: "AI", trigger: "sixthAnswerChecker" },
         { value: "human", label: "Human", trigger: "sixthAnswerChecker" },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "sixthAnswerChecker",
@@ -435,16 +467,19 @@ function Chatbot() {
       ),
       asMessage: true,
       trigger: "done",
+      placeholder: "Choose your answer...",
     },
     {
       id: "done",
       message: `Now I got it all well categorized! Thank you!`,
       trigger: "secondEnd",
+      placeholder: "Choose your answer...",
     },
     {
       id: "secondEnd",
       message: `Feel free to restart our conversation!`,
       trigger: "thirdEnd",
+      placeholder: "Choose your answer...",
     },
     {
       id: "thirdEnd",
@@ -455,15 +490,16 @@ function Chatbot() {
           trigger: "reloadAction",
         },
       ],
+      placeholder: "Choose your answer...",
     },
     {
       id: "reloadAction",
       hideInput: true,
-      message: "All set, see ya!",
+      message: "All set, see ya in a moment!",
       trigger: () => {
         setTimeout(() => {
           window.location.reload();
-        }, 2500);
+        }, 1500);
         return "bye";
       },
     },
