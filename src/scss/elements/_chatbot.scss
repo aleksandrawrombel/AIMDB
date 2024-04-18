@@ -133,6 +133,26 @@
   display: none;
 }
 
+.rsc-header-title {
+  width: 100%;
+  display: flex;
+}
+
+.bswvNT {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.score_hidden {
+  display: none;
+}
+
+.score_counter {
+  font-size: 1.25rem;
+}
+
 @media (max-width: 750px) {
   .chatbot {
     margin: 12rem;

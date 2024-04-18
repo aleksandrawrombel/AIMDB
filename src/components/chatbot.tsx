@@ -436,11 +436,6 @@ function Chatbot() {
       asMessage: true,
       trigger: "done",
     },
-    // {
-    //   id: "score",
-    //   message: `You managed to guess ${scoreCount} out of 6!`,
-    //   trigger: "done",
-    // },
     {
       id: "done",
       message: `Now I got it all well categorized! Thank you!`,
@@ -453,7 +448,6 @@ function Chatbot() {
     },
     {
       id: "thirdEnd",
-      hideInput: true,
       options: [
         {
           value: "restart",
@@ -510,8 +504,11 @@ function Chatbot() {
           height={"70vh"}
           headerTitle={
             <>
-              <span className="AI_color robotic_animation">AI</span>
-              <span>MDb</span>
+              <div className="wrapper">
+                <span className="AI_color robotic_animation">AI</span>
+                <span>MDb</span>
+              </div>
+              <span className={scoreCount < 1 ? "score_hidden" : "score_counter"}>{`score: ${scoreCount}/6`}</span>
             </>
           }
           botAvatar={humanoid_icon}
@@ -519,7 +516,6 @@ function Chatbot() {
           botDelay={2500}
           userDelay={10}
           bubbleOptionStyle={bubbleOptionStyle}
-          scoreCount={scoreCount}
         />
       </ThemeProvider>
     </main>
