@@ -35,10 +35,10 @@ function generateApiMovies() {
         messages: [
           {
             role: "user",
-            content: `generate description with a fictional, ridiculous movie plot that contain human protagonists with names, and that will be 100 tokens long, no additional text, no title, just pure description`,
+            content: `generate description with a fictional, ridiculous (but also quiet possible in real world) movie plot that contains human protagonists with names and is similar to real life human stories; and that will be 90 tokens long, no additional text, no title, just pure description`,
           },
         ],
-        max_tokens: 400,
+        max_tokens: 500,
       }),
     };
     try {

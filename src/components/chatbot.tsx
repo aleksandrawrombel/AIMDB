@@ -23,12 +23,14 @@ interface AnswerCheckerProps {
   index: number;
   previousStep: { value: string };
   joinedMoviesArray: any[];
+  checkedAnswer: (isCorrect: boolean) => void;
 }
 
 function AnswerChecker({
   index,
   previousStep,
   joinedMoviesArray,
+  checkedAnswer,
 }: AnswerCheckerProps) {
   const [isCorrectAI, setIsCorrectAI] = useState(false);
   const [isCorrectHuman, setIsCorrectHuman] = useState(false);
@@ -65,20 +67,28 @@ function AnswerChecker({
     const userAnswer = previousStep.value;
     const currentMovieAuthor = joinedMoviesArray[index].author;
 
+    let isCorrect = false;
+
     if (userAnswer === "AI" && currentMovieAuthor === "AI") {
       setIsCorrectAI(true);
       setIsCorrectHuman(false);
       setIsIncorrect(false);
+
+      isCorrect = true;
     } else if (userAnswer === "human" && currentMovieAuthor === "human") {
       setIsCorrectAI(false);
       setIsCorrectHuman(true);
       setIsIncorrect(false);
+
+      isCorrect = true;
     } else {
       setIsCorrectAI(false);
       setIsCorrectHuman(false);
       setIsIncorrect(true);
     }
-  }, [index, previousStep.value, joinedMoviesArray]);
+
+    checkedAnswer(isCorrect);
+  }, [index, previousStep.value, joinedMoviesArray, checkedAnswer]);
 
   const currentMoviePoster = joinedMoviesArray[index].poster;
   const currenMovieUrl = joinedMoviesArray[index].url;
@@ -103,6 +113,7 @@ function AnswerChecker({
 
 function Chatbot() {
   const [isVisible, setIsVisible] = useState(false);
+  const [scoreCount, setScoreCount] = useState(0);
 
   interface AIMovie {
     author: string;
@@ -124,6 +135,12 @@ function Chatbot() {
     }
     // fetchAIMovies();
   }, []);
+
+  function updateScore(isCorrect: boolean) {
+    if (isCorrect) {
+      setScoreCount((prev) => prev + 1);
+    }
+  }
 
   if (AIMovies.length === 0) {
     return (
@@ -244,7 +261,11 @@ function Chatbot() {
     {
       id: "firstAnswerChecker",
       component: (
-        <AnswerChecker index={0} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={0}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "secondOption",
@@ -274,7 +295,11 @@ function Chatbot() {
     {
       id: "secondAnswerChecker",
       component: (
-        <AnswerChecker index={1} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={1}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "thirdOption",
@@ -304,7 +329,11 @@ function Chatbot() {
     {
       id: "thirdAnswerChecker",
       component: (
-        <AnswerChecker index={2} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={2}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "fourthOption",
@@ -334,7 +363,11 @@ function Chatbot() {
     {
       id: "fourthAnswerChecker",
       component: (
-        <AnswerChecker index={3} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={3}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "fifthOption",
@@ -364,7 +397,11 @@ function Chatbot() {
     {
       id: "fifthAnswerChecker",
       component: (
-        <AnswerChecker index={4} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={4}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "sixthOption",
@@ -390,14 +427,23 @@ function Chatbot() {
     {
       id: "sixthAnswerChecker",
       component: (
-        <AnswerChecker index={5} joinedMoviesArray={joinedMoviesArray} />
+        <AnswerChecker
+          index={5}
+          joinedMoviesArray={joinedMoviesArray}
+          checkedAnswer={updateScore}
+        />
       ),
       asMessage: true,
       trigger: "done",
     },
+    // {
+    //   id: "score",
+    //   message: `You managed to guess ${scoreCount} out of 6!`,
+    //   trigger: "done",
+    // },
     {
       id: "done",
-      message: `And we are done! Now I got it all well categorized! Thank you!`,
+      message: `Now I got it all well categorized! Thank you!`,
       trigger: "secondEnd",
     },
     {
@@ -407,26 +453,23 @@ function Chatbot() {
     },
     {
       id: "thirdEnd",
+      hideInput: true,
       options: [
         {
           value: "restart",
           label: "I'd like to talk again!",
           trigger: "reloadAction",
         },
-        {
-          value: "finish",
-          label: "No, I'm not interested...",
-          trigger: "finalEndNoRestart",
-        },
       ],
     },
     {
       id: "reloadAction",
+      hideInput: true,
       message: "All set, see ya!",
       trigger: () => {
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 2500);
         return "bye";
       },
     },
@@ -436,12 +479,6 @@ function Chatbot() {
       component: <div className="closing"></div>,
       hideInput: true,
       avatar: false,
-      end: true,
-    },
-    {
-      id: "finalEndNoRestart",
-      message: `Well... your choice! Byeee!`,
-      hideInput: true,
       end: true,
     },
   ];
@@ -479,9 +516,10 @@ function Chatbot() {
           }
           botAvatar={humanoid_icon}
           userAvatar={user_icon}
-          botDelay={3000}
+          botDelay={2500}
           userDelay={10}
           bubbleOptionStyle={bubbleOptionStyle}
+          scoreCount={scoreCount}
         />
       </ThemeProvider>
     </main>
