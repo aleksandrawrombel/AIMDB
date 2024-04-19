@@ -4,7 +4,7 @@
 
 This application utilizes the OpenAI API, employing a designated prompt to fetch relevant data and display it to the user along app's author supplementary data collected from IMDB.
 
-### Link to the app - 
+### Link to the app - https://theaimdb.netlify.app/
 
 ### Snippets:
 <p align="center">
@@ -28,3 +28,5 @@ This application utilizes the OpenAI API, employing a designated prompt to fetch
  * [OpenAI API](https://openai.com/blog/openai-api)
 
 ### Badge:
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a9a4dc67-451a-4098-860f-3f96a0e936d0/deploy-status)](https://app.netlify.com/sites/theaimdb/deploys)
