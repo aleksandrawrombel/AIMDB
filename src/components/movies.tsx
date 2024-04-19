@@ -23,7 +23,6 @@ const API_KEY = import.meta.env.VITE_OPENAI_API_KEY as string;
 
 function generateApiMovies() {
   async function getDescriptions() {
-    console.log("API req sent");
     const options = {
       method: "POST",
       headers: {
