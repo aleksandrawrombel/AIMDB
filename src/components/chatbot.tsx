@@ -174,7 +174,7 @@ function Chatbot() {
       id: "welcome",
       message: "Welcome to AIMDb! What is your name?",
       trigger: "name",
-      placeholder: "Type the message..."
+      placeholder: "Type the message...",
     },
     {
       id: "name",
@@ -185,7 +185,7 @@ function Chatbot() {
         value = value.trim();
 
         if (value === "" || value.length > 15) {
-          return "Enter your name! Keep it under 15 letters!";
+          return "Enter your name!";
         }
 
         if (value.indexOf(" ") !== -1) {
@@ -471,7 +471,7 @@ function Chatbot() {
     },
     {
       id: "done",
-      message: `Now I got it all well categorized! Thank you!`,
+      message: `And we are done! Now I got it all well categorized! Thank you!`,
       trigger: "secondEnd",
       placeholder: "Choose your answer...",
     },
@@ -544,7 +544,9 @@ function Chatbot() {
                 <span className="AI_color robotic_animation">AI</span>
                 <span>MDb</span>
               </div>
-              <span className={scoreCount < 1 ? "score_hidden" : "score_counter"}>{`score: ${scoreCount}/6`}</span>
+              <span
+                className={scoreCount < 1 ? "score_hidden" : "score_counter"}
+              >{`score: ${scoreCount}/6`}</span>
             </>
           }
           botAvatar={humanoid_icon}

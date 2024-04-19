@@ -38,7 +38,7 @@ function generateApiMovies() {
             content: `generate description with a fictional, ridiculous (but also quiet possible in real world) movie plot that contains human protagonists with names and is similar to real life human stories; and that will be 90 tokens long, no additional text, no title, just pure description`,
           },
         ],
-        max_tokens: 500,
+        max_tokens: 600,
       }),
     };
     try {

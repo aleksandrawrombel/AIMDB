@@ -21,6 +21,7 @@
 
   .loading_error {
     margin-top: 6rem;
+    margin-left: -2rem;
     color: $gray-darker;
   }
 }
@@ -164,5 +165,38 @@
       height: 11rem;
       padding: 1rem;
     }
+  }
+
+  .loader {
+    margin-left: 3rem;
+  }
+
+  .loading_error {
+    margin-right: -2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .chatbot {
+    margin: 2rem;
+  }
+  .chatbot_container {
+    line-height: 1rem;
+    letter-spacing: 0.15rem;
+    text-align: left;
+  }
+
+  .sc-bZQynM.cAqQwz.rsc-ts-bubble,
+  .sc-bZQynM.UlqqE.rsc-ts-bubble,
+  .sc-bZQynM.fhBxVb.rsc-ts-bubble,
+  .sc-bZQynM.iqXeQs.rsc-ts-bubble,
+  .sc-EHOje.jvzENE.rsc-os > ul > li > button {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 500px), (max-width: 568px) {
+  .sc-iwsKbI.ggeUdq.rsc-container {
+    width: 70vw;
   }
 }
