@@ -139,7 +139,7 @@ function Chatbot() {
       setError("Something went wrong! Refresh the page!");
     }, 12_000);
 
-    // fetchAIMovies();
+    fetchAIMovies();
 
     return () => {
       clearTimeout(timer);
@@ -217,6 +217,7 @@ function Chatbot() {
     },
     {
       id: "explanation",
+      // @ts-expect-error react simple chatbot specification
       component: <GetName />,
       asMessage: true,
       trigger: "help",
@@ -283,6 +284,7 @@ function Chatbot() {
     {
       id: "firstAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={0}
           joinedMoviesArray={joinedMoviesArray}
@@ -321,6 +323,7 @@ function Chatbot() {
     {
       id: "secondAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={1}
           joinedMoviesArray={joinedMoviesArray}
@@ -359,6 +362,7 @@ function Chatbot() {
     {
       id: "thirdAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={2}
           joinedMoviesArray={joinedMoviesArray}
@@ -397,6 +401,7 @@ function Chatbot() {
     {
       id: "fourthAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={3}
           joinedMoviesArray={joinedMoviesArray}
@@ -435,6 +440,7 @@ function Chatbot() {
     {
       id: "fifthAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={4}
           joinedMoviesArray={joinedMoviesArray}
@@ -469,6 +475,7 @@ function Chatbot() {
     {
       id: "sixthAnswerChecker",
       component: (
+        // @ts-expect-error react simple chatbot specification
         <AnswerChecker
           index={5}
           joinedMoviesArray={joinedMoviesArray}
