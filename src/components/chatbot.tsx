@@ -124,6 +124,7 @@ function Chatbot() {
 
   useEffect(() => {
     setIsVisible(true);
+    let timer;
 
     async function fetchAIMovies() {
       try {
@@ -133,7 +134,16 @@ function Chatbot() {
         setError("Something went wrong! Refresh the page!");
       }
     }
+
+    timer = setTimeout(() => {
+      setError("Something went wrong! Refresh the page!");
+    }, 12_000);
+
     // fetchAIMovies();
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   function updateScore(isCorrect: boolean) {
