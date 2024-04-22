@@ -1,8 +1,12 @@
 import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
+import GithubLogo from "./githubLogo";
 
 import humanoid_icon from "../assets/humanoid_icon.svg";
 import user_icon from "../assets/user_icon.svg";
+import dance_1 from "../assets/AI_dance_1.gif";
+import dance_2 from "../assets/AI_dance_2.gif";
+import dance_3 from "../assets/AI_dance_3.gif";
 import { randomMoviesArray, generateApiMovies } from "./movies";
 
 import { useState, useEffect } from "react";
@@ -34,7 +38,8 @@ function AnswerChecker({
 }: AnswerCheckerProps) {
   const [isCorrectAI, setIsCorrectAI] = useState(false);
   const [isCorrectHuman, setIsCorrectHuman] = useState(false);
-  const [isIncorrect, setIsIncorrect] = useState(false);
+  const [isIncorrectAI, setIsIncorrectAI] = useState(false);
+  const [isIncorrectHuman, setIsIncorrectHuman] = useState(false);
 
   const humanCorrectAnswers = [
     `That's right, this one came out of the human brain!`,
@@ -46,17 +51,28 @@ function AnswerChecker({
   ];
 
   const AICorrectAnswers = [
-    `That's right, this one is written by AI! Incredible!`,
+    `That's right, this one is written by AI! Incredible, right?!`,
     `You are correct, artificial intelligence at it's best!`,
-    `You are right! This one, well... That's on me, my friend!`,
+    `You are right! This one... That's on me, my friend!`,
     `Yes, exactly! Crafted by the AI power! Incredible!`,
     `Yes, you are right! This is pure AI imagination!`,
-    `Yes, well done! A manifestation of mechanical thought!`,
+    `Well done! A manifestation of mechanical thought!`,
   ];
 
-  const wrongAnswers = [
-    `No, sorry, it's the other way around! Come on, check what's next!`,
-    `Close, but no. Wrong answer!`,
+  const AIDances = [dance_1, dance_2, dance_3, dance_1, dance_2, dance_3];
+
+  const wrongAnswersAI = [
+    `Sorry, wrong! It's actually a movie written by a human!`,
+    `Well... wrong, this was written by humans actually!`,
+    `Sorry, wrong answer! Not AI's work, it was a human!`,
+    `Incorrect, sorry! Check out the poster! Incredible!`,
+    `Wrong! Go on, you can do this! This one's on humans!`,
+    `Well, you are incorrect... But good job nonetheless!`,
+  ];
+
+  const wrongAnswersHuman = [
+    `Sorry, it's the other way around! Check what's next!`,
+    `Well... close, but no. It's the wrong answer, sorry!`,
     `Sorry, wrong answer! Keep going!`,
     `Incorrect, sorry! Good luck with the next one!`,
     `Wrong! Let's check the next one!`,
@@ -72,19 +88,27 @@ function AnswerChecker({
     if (userAnswer === "AI" && currentMovieAuthor === "AI") {
       setIsCorrectAI(true);
       setIsCorrectHuman(false);
-      setIsIncorrect(false);
+      setIsIncorrectAI(false);
+      setIsIncorrectHuman(false);
 
       isCorrect = true;
     } else if (userAnswer === "human" && currentMovieAuthor === "human") {
       setIsCorrectAI(false);
       setIsCorrectHuman(true);
-      setIsIncorrect(false);
+      setIsIncorrectAI(false);
+      setIsIncorrectHuman(false);
 
       isCorrect = true;
-    } else {
+    } else if (userAnswer === "human" && currentMovieAuthor === "AI") {
       setIsCorrectAI(false);
       setIsCorrectHuman(false);
-      setIsIncorrect(true);
+      setIsIncorrectAI(false);
+      setIsIncorrectHuman(true);
+    } else if (userAnswer === "AI" && currentMovieAuthor === "human") {
+      setIsCorrectAI(false);
+      setIsCorrectHuman(false);
+      setIsIncorrectAI(true);
+      setIsIncorrectHuman(false);
     }
 
     checkedAnswer(isCorrect);
@@ -92,10 +116,20 @@ function AnswerChecker({
 
   const currentMoviePoster = joinedMoviesArray[index].poster;
   const currenMovieUrl = joinedMoviesArray[index].url;
+  const currentAIDance = AIDances[index];
 
   return (
     <>
-      {isCorrectAI && <p>{AICorrectAnswers[index]}</p>}
+      {isCorrectAI && (
+        <>
+          <p>{AICorrectAnswers[index]}</p>
+          <div className="AI_dance">
+            <a href={currentAIDance}>
+              <img src={currentAIDance} alt="Boston_Dynamics_robots_dancing" />
+            </a>
+          </div>
+        </>
+      )}
       {isCorrectHuman && (
         <>
           <p>{humanCorrectAnswers[index]}</p>
@@ -106,7 +140,17 @@ function AnswerChecker({
           </div>
         </>
       )}
-      {isIncorrect && <p>{wrongAnswers[index]}</p>}
+      {isIncorrectAI && (
+        <>
+          <p>{wrongAnswersAI[index]}</p>
+          <div className="movie_poster">
+            <a href={currenMovieUrl} target="_blank" className="movie_link">
+              <img src={currentMoviePoster} alt="movie_poster" />
+            </a>
+          </div>
+        </>
+      )}
+      {isIncorrectHuman && <p>{wrongAnswersHuman[index]}</p>}
     </>
   );
 }
@@ -137,7 +181,7 @@ function Chatbot() {
 
     timer = setTimeout(() => {
       setError("Something went wrong! Refresh the page!");
-    }, 12_000);
+    }, 15_000);
 
     fetchAIMovies();
 
@@ -548,32 +592,33 @@ function Chatbot() {
   };
 
   return (
-    <main className={`chatbot_container ${isVisible ? "fade_in" : ""}`}>
-      <ThemeProvider theme={theme}>
-        <ChatBot
-          className="chatbot"
-          steps={steps}
-          width={"70vw"}
-          height={"70vh"}
-          headerTitle={
-            <>
-              <div className="wrapper">
-                <span className="AI_color robotic_animation">AI</span>
-                <span>MDb</span>
-              </div>
-              <span
-                className={scoreCount < 1 ? "score_hidden" : "score_counter"}
-              >{`score: ${scoreCount}/6`}</span>
-            </>
-          }
-          botAvatar={humanoid_icon}
-          userAvatar={user_icon}
-          botDelay={2500}
-          userDelay={10}
-          bubbleOptionStyle={bubbleOptionStyle}
-        />
-      </ThemeProvider>
-    </main>
+      <main className={`chatbot_container ${isVisible ? "fade_in" : ""}`}>
+        <ThemeProvider theme={theme}>
+          <ChatBot
+            className="chatbot"
+            steps={steps}
+            width={"70vw"}
+            height={"70vh"}
+            headerTitle={
+              <>
+                <div className="wrapper">
+                  <span className="AI_color robotic_animation">AI</span>
+                  <span>MDb</span>
+                </div>
+                <span
+                  className={scoreCount < 1 ? "score_hidden" : "score_counter"}
+                >{`score: ${scoreCount}/6`}</span>
+              </>
+            }
+            botAvatar={humanoid_icon}
+            userAvatar={user_icon}
+            botDelay={2500}
+            userDelay={10}
+            bubbleOptionStyle={bubbleOptionStyle}
+          />
+        </ThemeProvider>
+        <GithubLogo />
+      </main>
   );
 }
 
