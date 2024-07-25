@@ -124,7 +124,7 @@ function AnswerChecker({
         <>
           <p>{AICorrectAnswers[index]}</p>
           <div className="AI_dance">
-            <a href={currentAIDance}>
+            <a href={currentAIDance} target="_blank">
               <img src={currentAIDance} alt="Boston_Dynamics_robots_dancing" />
             </a>
           </div>
